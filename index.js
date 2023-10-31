@@ -1,5 +1,7 @@
 const content = document.querySelector(".content");
 const restart = document.querySelector(".js-btn");
+const audio = document.querySelector('#game-audio')
+console.dir(audio);
 content.addEventListener("click", onClick);
 restart.addEventListener("click", onClickBtn);
 
@@ -14,6 +16,14 @@ const winners = [
   [1, 5, 9],
   [3, 5, 7],
 ];
+
+function playAudio() {
+  audio.play()
+}
+function pauseAudio() {
+  audio.pause()
+}
+
 function createMarkup() {
   let markup = "";
   for (let i = 1; i <= 9; i += 1) {
@@ -48,13 +58,16 @@ function onClick(e) {
   if (!e.target.textContent) {
     e.target.textContent = player;
     player = player === "X" ? "O" : "X";
+    playAudio()
     const winner = checkWinner();
     if (winner) {
-        content.innerHTML = createMarkup();
+      content.innerHTML = createMarkup();
+      pauseAudio()
       alert(`Player ${winner} won`);
     }
     else if (isDraw()) {
-        content.innerHTML = createMarkup();
+      content.innerHTML = createMarkup();
+      pauseAudio()
         alert('It is a draw')
       }
   } else alert("Please enter your value in an empty cell");
