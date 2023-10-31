@@ -1,9 +1,13 @@
 const content = document.querySelector(".content");
-const restart = document.querySelector(".js-btn");
-const audio = document.querySelector('#game-audio')
-console.dir(audio);
+const btnContainer = document.querySelector(".js-btn-container");
+const restart = document.querySelector(".js-btn-restart");
+const playMusic = document.querySelector(".js-btn-music-play");
+const pauseMusic = document.querySelector(".js-btn-music-pause");
+const audio = document.querySelector("#game-audio");
+audio.loop = true;
+
 content.addEventListener("click", onClick);
-restart.addEventListener("click", onClickBtn);
+btnContainer.addEventListener("click", onClickBtn);
 
 let player = "X";
 const winners = [
@@ -18,10 +22,10 @@ const winners = [
 ];
 
 function playAudio() {
-  audio.play()
+  audio.play();
 }
 function pauseAudio() {
-  audio.pause()
+  audio.pause();
 }
 
 function createMarkup() {
@@ -50,29 +54,41 @@ function checkWinner() {
   return null;
 }
 function isDraw() {
-    const cells = document.querySelectorAll('.item');
-    const values = Array.from(cells).every(val => val.textContent !=='') 
-    return values
+  const cells = document.querySelectorAll(".item");
+  const values = Array.from(cells).every((val) => val.textContent !== "");
+  return values;
 }
 function onClick(e) {
   if (!e.target.textContent) {
     e.target.textContent = player;
     player = player === "X" ? "O" : "X";
-    playAudio()
+    playAudio();
     const winner = checkWinner();
     if (winner) {
       content.innerHTML = createMarkup();
-      pauseAudio()
+      pauseAudio();
       alert(`Player ${winner} won`);
-    }
-    else if (isDraw()) {
+    } else if (isDraw()) {
       content.innerHTML = createMarkup();
-      pauseAudio()
-        alert('It is a draw')
-      }
+      pauseAudio();
+      alert("It is a draw");
+    }
   } else alert("Please enter your value in an empty cell");
 }
-function onClickBtn() {
-  player = "X";
-  content.innerHTML = createMarkup();
+function onClickBtn(e) {
+  if (e.target.className === "js-btn-restart") {
+    player = "X";
+    content.innerHTML = createMarkup();
+    pauseAudio();
+  }
+  if (e.target.className === "js-btn-music-play") {
+    playAudio();
+  } else {
+    pauseAudio();
+  }
 }
+
+function disabledScroll() {
+  document.body.style.overflow = 'hidden'
+}
+disabledScroll()
