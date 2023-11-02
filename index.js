@@ -88,7 +88,7 @@ function onClickBtn(e) {
   }
 }
 
-function disabledScroll() {
-  document.body.style.overflow = 'hidden'
-}
-disabledScroll()
+// function disabledScroll() {
+//   document.body.style.overflow = 'hidden'
+// }
+// disabledScroll()

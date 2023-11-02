@@ -3,27 +3,45 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 50px;
-  background-image: linear-gradient(
-    rgba(0, 0, 255, 0.5),
-    rgba(255, 255, 0, 0.5)
-  );
+  padding: 30px 0;
+  background-image: linear-gradient(rgba(0, 0, 255, 0.5), #ffff0080);
+
+  @media screen and (min-width: 768px) {
+    padding: 50px 0;
+  }
+  @media screen and (min-width: 1200px) {
+    padding: 60px 0;
+  }
 }
 .title {
-  font-size: 50px;
+  font-size: 40px;
+  margin: 0 0 10px 0;
+  padding: 0;
   color: rgb(27, 48, 141);
+
+  @media screen and (min-width: 768px) {
+    font-size: 50px;
+    margin: 0 0 15px 0;
+  }
+  @media screen and (min-width: 1200px) {
+    font-size: 70px;
+    margin: 0 0 20px 0;
+  }
+}
+
+.js-btn-container {
+  margin-bottom: 20px;
 }
 
 .js-btn-restart,
 .js-btn-music-play,
 .js-btn-music-pause {
-  width: 200px;
-  padding: 15px;
-  margin-bottom: 20px;
+  width: 103px;
+  padding: 5px;
   background-color: transparent;
   border-radius: 5px;
   border: 3px solid black;
-  font-size: 28px;
+  font-size: 18px;
   color: rgb(27, 48, 141);
   cursor: pointer;
 
@@ -32,26 +50,54 @@
     box-shadow: 0px 4px 4px wheat;
     border: none;
   }
+
+  @media screen and (min-width: 768px) {
+    width: 152px;
+    padding: 10px;
+    font-size: 22px;
+  }
+  @media screen and (min-width: 1200px) {
+    width: 202.5px;
+    padding: 15px;
+    font-size: 28px;
+  }
 }
 
 .content {
-  width: 609px;
+  width: 312px;
   border: 2px solid black;
   margin: 0 auto;
+
+  @media screen and (min-width: 768px) {
+    width: 462px;
+  }
+  @media screen and (min-width: 1200px) {
+    width: 612px;
+  }
 }
 
 .item {
-  width: 200px;
-  height: 200px;
-
+  width: 100px;
+  height: 100px;
   line-height: 1.6;
   text-align: center;
   display: inline-block;
-  font-size: 125px;
+  font-size: 60px;
   border: 2px solid black;
   cursor: pointer;
   vertical-align: middle;
   transition: background 0.1s;
+
+  @media screen and (min-width: 768px) {
+    font-size: 95px;
+    width: 150px;
+    height: 150px;
+  }
+  @media screen and (min-width: 1200px) {
+    font-size: 125px;
+    width: 200px;
+    height: 200px;
+  }
 }
 
 .item:hover {
