@@ -9,6 +9,10 @@ audio.loop = true;
 content.addEventListener("click", onClick);
 btnContainer.addEventListener("click", onClickBtn);
 
+const KEY_X = "playerX";
+const KEY_0 = "player0";
+let playerX = JSON.parse(localStorage.getItem(KEY_X)) || [];
+let player0 = JSON.parse(localStorage.getItem(KEY_0)) || [];
 let player = "X";
 const winners = [
   [1, 2, 3],
@@ -20,6 +24,22 @@ const winners = [
   [1, 5, 9],
   [3, 5, 7],
 ];
+
+
+  function startGame() {
+    [...content.children].forEach(item => {
+    console.log(item);
+    const id = Number(item.dataset.id)
+
+    if (playerX.includes(id)) {
+      item.textContent = 'X';
+    } else if (player0.includes(id)) {
+      item.textContent = 'O'
+    }
+  })
+}
+
+startGame()
 
 function playAudio() {
   audio.play();
@@ -37,49 +57,84 @@ function createMarkup() {
 }
 content.insertAdjacentHTML("beforeend", createMarkup());
 
-function checkWinner() {
-  for (const line of winners) {
-    const [a, b, c] = line;
-    const cells = document.querySelectorAll(
-      `[data-id='${a}'], [data-id='${b}'], [data-id='${c}']`
-    );
-    const values = Array.from(cells).map((value) => value.textContent);
-    if (
-      values.every((val) => val === "X") ||
-      values.every((val) => val === "O")
-    ) {
-      return values[0];
-    }
-  }
-  return null;
+function checkWinner(arr) {
+  return winners.some((item) => item.every((id) => arr.includes(id)));
 }
-function isDraw() {
-  const cells = document.querySelectorAll(".item");
-  const values = Array.from(cells).every((val) => val.textContent !== "");
-  return values;
-}
+
+// function checkWinner() {
+//   for (const line of winners) {
+//     const [a, b, c] = line;
+//     const cells = document.querySelectorAll(
+//       `[data-id='${a}'], [data-id='${b}'], [data-id='${c}']`
+//     );
+//     const values = Array.from(cells).map((value) => value.textContent);
+
+//     if (
+//       values.every((val) => val === "X") ||
+//       values.every((val) => val === "O")
+//     ) {
+//       return values[0];
+//     }
+//   }
+//   return null;
+// }
+// function isDraw() {
+//   const cells = document.querySelectorAll(".item");
+//   const values = Array.from(cells).every((val) => val.textContent !== "");
+//   return values;
+// }
 function onClick(e) {
   if (!e.target.textContent) {
     e.target.textContent = player;
-    player = player === "X" ? "O" : "X";
     playAudio();
-    const winner = checkWinner();
-    if (winner) {
-      content.innerHTML = createMarkup();
-      pauseAudio();
-      alert(`Player ${winner} won`);
-    } else if (isDraw()) {
-      content.innerHTML = createMarkup();
-      pauseAudio();
-      alert("It is a draw");
+    let result;
+    const id = Number(e.target.dataset.id);
+    if (player === "X") {
+      playerX.push(id);
+      localStorage.setItem(KEY_X, JSON.stringify(playerX));
+      result = checkWinner(playerX);
+    } else {
+      player0.push(id);
+      localStorage.setItem(KEY_0, JSON.stringify(player0));
+      result = checkWinner(player0);
     }
-  } else alert("Please enter your value in an empty cell");
+    setTimeout(() => {
+      if (result) {
+        alert(`Player ${player} won`);
+        pauseAudio();
+        playerX = [];
+        player0 = [];
+        localStorage.clear()
+        content.innerHTML = createMarkup();
+        return;
+      }
+      player = player === "X" ? "O" : "X";
+    });
+  } else {
+    alert("Please enter your value in an empty cell");
+  }
+  //   playAudio();
+  //   const winner = checkWinner();
+  //   if (winner) {
+  //     content.innerHTML = createMarkup();
+  //     pauseAudio();
+  //     alert(`Player ${winner} won`);
+  //   } else if (isDraw()) {
+  //     content.innerHTML = createMarkup();
+  //     pauseAudio();
+  //     alert("It is a draw");
+  //   }
+  // } else alert("Please enter your value in an empty cell");
 }
+
 function onClickBtn(e) {
   if (e.target.className === "js-btn-restart") {
     player = "X";
-    content.innerHTML = createMarkup();
+    playerX = [];
+    player0 = [];
     pauseAudio();
+    localStorage.clear();
+    content.innerHTML = createMarkup();
   }
   if (e.target.className === "js-btn-music-play") {
     playAudio();
