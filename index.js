@@ -1,4 +1,5 @@
 const content = document.querySelector(".content");
+const statistic = document.querySelector(".js-stat");
 const btnContainer = document.querySelector(".js-btn-container");
 const restart = document.querySelector(".js-btn-restart");
 const playMusic = document.querySelector(".js-btn-music-play");
@@ -29,7 +30,6 @@ const winners = [
 function startGame() {
   [...content.children].forEach((item) => {
     const id = Number(item.dataset.id);
-    console.log(id);
     if (playerX.includes(id)) {
       item.textContent = "X";
     } else if (player0.includes(id)) {
@@ -53,6 +53,19 @@ function createMarkup() {
   }
   return markup;
 }
+function createStatMarkup() {
+  return markup = `<table>
+  <tr>
+    <th>Player X</th>
+    <th>Player 0</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+  </tr>
+</table>`
+}
+
 
 
 function checkWinner(arr) {
@@ -133,6 +146,9 @@ function onClickBtn(e) {
     pauseAudio();
     localStorage.clear();
     content.innerHTML = createMarkup();
+  }
+  if (e.target.className === "js-btn-statistic") {
+    statistic.insertAdjacentHTML('beforeend', createStatMarkup())
   }
   if (e.target.className === "js-btn-music-play") {
     playAudio();

@@ -35,8 +35,9 @@
 
 .js-btn-restart,
 .js-btn-music-play,
-.js-btn-music-pause {
-  width: 103px;
+.js-btn-music-pause,
+.js-btn-statistic {
+  width: 76px;
   padding: 5px;
   background-color: transparent;
   border-radius: 5px;
@@ -52,12 +53,12 @@
   }
 
   @media screen and (min-width: 768px) {
-    width: 152px;
+    width: 114px;
     padding: 10px;
     font-size: 22px;
   }
   @media screen and (min-width: 1200px) {
-    width: 202.5px;
+    width: 152px;
     padding: 15px;
     font-size: 28px;
   }
