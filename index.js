@@ -6,6 +6,7 @@ const pauseMusic = document.querySelector(".js-btn-music-pause");
 const audio = document.querySelector("#game-audio");
 audio.loop = true;
 
+content.insertAdjacentHTML("beforeend", createMarkup());
 content.addEventListener("click", onClick);
 btnContainer.addEventListener("click", onClickBtn);
 
@@ -25,21 +26,18 @@ const winners = [
   [3, 5, 7],
 ];
 
-
-  function startGame() {
-    [...content.children].forEach(item => {
-    console.log(item);
-    const id = Number(item.dataset.id)
-
+function startGame() {
+  [...content.children].forEach((item) => {
+    const id = Number(item.dataset.id);
+    console.log(id);
     if (playerX.includes(id)) {
-      item.textContent = 'X';
+      item.textContent = "X";
     } else if (player0.includes(id)) {
-      item.textContent = 'O'
+      item.textContent = "O";
     }
-  })
+  });
 }
-
-startGame()
+startGame();
 
 function playAudio() {
   audio.play();
@@ -55,7 +53,7 @@ function createMarkup() {
   }
   return markup;
 }
-content.insertAdjacentHTML("beforeend", createMarkup());
+
 
 function checkWinner(arr) {
   return winners.some((item) => item.every((id) => arr.includes(id)));
@@ -104,7 +102,7 @@ function onClick(e) {
         pauseAudio();
         playerX = [];
         player0 = [];
-        localStorage.clear()
+        localStorage.clear();
         content.innerHTML = createMarkup();
         return;
       }
