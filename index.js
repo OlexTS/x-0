@@ -16,6 +16,8 @@ const KEY_0 = "player0";
 let playerX = JSON.parse(localStorage.getItem(KEY_X)) || [];
 let player0 = JSON.parse(localStorage.getItem(KEY_0)) || [];
 let player = "X";
+let statX = 0;
+let stat0 = 0;
 const winners = [
   [1, 2, 3],
   [3, 6, 9],
@@ -56,8 +58,8 @@ function createMarkup() {
 function createStatMarkup() {
   return markup = `<table>
   <tr>
-    <th>Player X</th>
-    <th>Player 0</th>
+    <th>Player X = ${statX}</th>
+    <th>Player 0 = ${stat0}</th>
   </tr>
   <tr>
     <td></td>
@@ -104,14 +106,17 @@ function onClick(e) {
       playerX.push(id);
       localStorage.setItem(KEY_X, JSON.stringify(playerX));
       result = checkWinner(playerX);
+      
     } else {
       player0.push(id);
       localStorage.setItem(KEY_0, JSON.stringify(player0));
       result = checkWinner(player0);
+     
     }
     setTimeout(() => {
       if (result) {
         alert(`Player ${player} won`);
+        player==='X'?statX+=1:stat0+=1
         pauseAudio();
         playerX = [];
         player0 = [];
@@ -148,7 +153,7 @@ function onClickBtn(e) {
     content.innerHTML = createMarkup();
   }
   if (e.target.className === "js-btn-statistic") {
-    statistic.insertAdjacentHTML('beforeend', createStatMarkup())
+     statistic.innerHTML=createStatMarkup()
   }
   if (e.target.className === "js-btn-music-play") {
     playAudio();
